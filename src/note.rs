@@ -41,7 +41,7 @@ impl Note {
             .get(usize::from(self.letter))
             .copied()
             .unwrap_or('?');
-        let accidental = if self.acc < 0 { 'b' } else { '#' };
+        let accidental = accidental_symbol(self.acc < 0);
         let mut name = String::with_capacity(1 + usize::from(self.acc.unsigned_abs()));
         name.push(letter);
         for _ in 0..self.acc.unsigned_abs() {
@@ -54,6 +54,16 @@ impl Note {
         let natural = NATURAL.get(usize::from(self.letter)).copied().unwrap_or(0);
         (natural + i32::from(self.acc)).rem_euclid(12)
     }
+}
+
+#[cfg(not(feature = "unicode"))]
+fn accidental_symbol(flat: bool) -> char {
+    if flat { 'b' } else { '#' }
+}
+
+#[cfg(feature = "unicode")]
+fn accidental_symbol(flat: bool) -> char {
+    if flat { '\u{266D}' } else { '\u{266F}' }
 }
 
 fn letter_index(letter: u8) -> Option<u8> {

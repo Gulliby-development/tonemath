@@ -100,6 +100,16 @@ For list commands, provide entries as arguments or use a single `-` in place of 
 
 The program returns 0 on success. It returns 1 only when `identify` or `keys` finds no matches; in that case, it writes no result lines. It returns 2 for command, option, input, or spelling errors, reported on standard error.
 
+## Unicode accidentals
+
+By default, every note name uses `#` for a sharp and `b` for a flat. Build with the `unicode` Cargo feature to use musical signs instead: `C#` becomes `C♯`, `Bb` becomes `B♭`, and `F##` becomes `F♯♯`.
+
+```text
+cargo build --release --features unicode
+```
+
+The feature changes only the note names tonemath computes, including scale notes, chord notes, key names, identified chords, and transposed chords. Input is still read in ASCII, and text you typed (such as the root in the `scale:` line) is echoed as typed. Output is UTF-8, so your terminal must be able to display it.
+
 ## Development
 
 Run these checks from the project directory:
