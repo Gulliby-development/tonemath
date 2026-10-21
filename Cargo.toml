@@ -3,4 +3,8 @@ name = "tonemath"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+default = []
+unicode = []
+
 [dependencies]
