@@ -80,7 +80,7 @@ fn readme_usage_block_matches_contract_and_cli_help() {
         "       tonemath chord SYMBOL\n",
         "       tonemath interval A B\n",
         "       tonemath identify [--limit N] NOTE...\n",
-        "       tonemath keys [--limit N] NOTE...\n",
+        "       tonemath keys [--limit N] [--max-accidentals N] NOTE...\n",
         "       tonemath transpose INTERVAL SYMBOL...\n",
         "       tonemath analyze KEY SYMBOL..."
     );

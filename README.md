@@ -25,7 +25,7 @@ usage: tonemath scale ROOT NAME
        tonemath chord SYMBOL
        tonemath interval A B
        tonemath identify [--limit N] NOTE...
-       tonemath keys [--limit N] NOTE...
+       tonemath keys [--limit N] [--max-accidentals N] NOTE...
        tonemath transpose INTERVAL SYMBOL...
        tonemath analyze KEY SYMBOL...
 ```
@@ -78,7 +78,7 @@ Bbmaj7/D  bIImaj7/4
 
 Notes use an uppercase letter from A through G, optionally followed by one or two sharps (`#` or `##`) or flats (`b` or `bb`). Tonemath preserves diatonic spelling, so enharmonic notes can have different names. Interval names combine a quality and a number, such as `M3`, `P5`, or `m2`; prefix an interval with `-` to move downward, as in `-m3`.
 
-For list commands, provide entries as arguments or use a single `-` in place of the list to read it from standard input. Standard input is strict UTF-8; one leading byte-order mark is ignored, and spaces, tabs, carriage returns, and line feeds separate entries. The list limit counts supplied entries, including duplicates: `identify` and `keys` accept at most 12 notes, while `transpose` and `analyze` accept at most 100 chord symbols. The `identify` `--limit` option accepts 1 through 100 and defaults to 100; `keys` accepts 1 through 30 and defaults to 30.
+For list commands, provide entries as arguments or use a single `-` in place of the list to read it from standard input. Standard input is strict UTF-8; one leading byte-order mark is ignored, and spaces, tabs, carriage returns, and line feeds separate entries. The list limit counts supplied entries, including duplicates: `identify` and `keys` accept at most 12 notes, while `transpose` and `analyze` accept at most 100 chord symbols. The `identify` `--limit` option accepts 1 through 100 and defaults to 100; `keys` accepts 1 through 30 and defaults to 30. The `keys` `--max-accidentals` option accepts 0 through 7 and defaults to 7.
 
 ## Commands
 
@@ -90,7 +90,7 @@ For list commands, provide entries as arguments or use a single `-` in place of 
 
 `identify NOTE...` lists chord names matching the supplied set of notes, including tied matches. Use `--limit N` to cap the results; its range and default are described above.
 
-`keys NOTE...` lists major and minor keys containing every supplied note. Use `--limit N` to cap the results; its range and default are described above.
+`keys NOTE...` lists major and minor keys containing every supplied note. Use `--limit N` to cap the results; its range and default are described above. Use `--max-accidentals N` to keep only the keys with at most N sharps or flats (`--max-accidentals 0` keeps C major and A minor); the filter runs before `--limit`, and a filter that leaves no key is the same no-match result as an empty answer (exit code 1).
 
 `transpose INTERVAL SYMBOL...` transposes each chord by the named interval. Prefix the interval with `-` to transpose downward; chord inversions move with their chords.
 

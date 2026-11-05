@@ -64,7 +64,7 @@ fn assert_error(args: &[&str], message: &str) {
 
 #[test]
 fn usage_is_exact_and_sole_help_writes_it_once() {
-    let expected = "usage: tonemath scale ROOT NAME\n       tonemath chord SYMBOL\n       tonemath interval A B\n       tonemath identify [--limit N] NOTE...\n       tonemath keys [--limit N] NOTE...\n       tonemath transpose INTERVAL SYMBOL...\n       tonemath analyze KEY SYMBOL...";
+    let expected = "usage: tonemath scale ROOT NAME\n       tonemath chord SYMBOL\n       tonemath interval A B\n       tonemath identify [--limit N] NOTE...\n       tonemath keys [--limit N] [--max-accidentals N] NOTE...\n       tonemath transpose INTERVAL SYMBOL...\n       tonemath analyze KEY SYMBOL...";
     assert_eq!(USAGE, expected);
 
     let io = MemoryIo::new(&[]);

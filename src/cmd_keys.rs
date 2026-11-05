@@ -8,12 +8,20 @@ use crate::text;
 pub fn run(argv: &[String], io: &dyn Io) -> Result<i32, TheoryError> {
     let parsed = options::parse(
         argv,
-        &[Spec {
-            name: "--limit",
-            lo: 1,
-            hi: 30,
-            fallback: 30,
-        }],
+        &[
+            Spec {
+                name: "--limit",
+                lo: 1,
+                hi: 30,
+                fallback: 30,
+            },
+            Spec {
+                name: "--max-accidentals",
+                lo: 0,
+                hi: 7,
+                fallback: 7,
+            },
+        ],
     )?;
     let args = parsed.args;
 
@@ -34,7 +42,11 @@ pub fn run(argv: &[String], io: &dyn Io) -> Result<i32, TheoryError> {
     }
 
     let limit = parsed.values.get("--limit").copied().unwrap_or(30) as usize;
-    let matches = keys::matching(&notes);
+    let max_accidentals = parsed.values.get("--max-accidentals").copied().unwrap_or(7) as u32;
+    let matches = keys::matching(&notes)
+        .into_iter()
+        .filter(|key| key.accidentals.unsigned_abs() <= max_accidentals)
+        .collect::<Vec<_>>();
     if matches.is_empty() {
         return Ok(1);
     }
